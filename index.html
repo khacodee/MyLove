@@ -6,40 +6,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tớ và Cậu</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #111;
+            color: white;
+        }
+
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1c1c1c, #333);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .typing-text {
+            font-size: 2em;
+            margin-bottom: 1em;
+            white-space: nowrap;
+            border-right: 3px solid #4CAF50;
+            overflow: hidden;
+            width: 0;
+            animation: typing 3s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 16em;
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: #4CAF50;
+            }
+        }
+
+        .intro-screen button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .intro-screen button:hover {
+            background-color: #45a049;
+        }
+
+        .chat-container {
+            display: none;
+            padding: 20px;
+        }
+
+        .message-box {
+            margin-top: 20px;
+        }
+
+        .header {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .back {
+            margin-right: 10px;
+        }
+
+       
+    </style>
 </head>
 
 <body>
-    <div class="chat-container">
+    <!-- Màn hình mở đầu -->
+    <div class="intro-screen" id="intro">
+        <div id="typing" class="typing-text"></div>
+        <button onclick="startExperience()">OK</button>
+    </div>
+
+    <!-- Nội dung chính -->
+    <div class="chat-container" id="chat">
         <div class="header">
             <span class="back">&#x25C0;</span>
             <span class="name">Gửi cậu, Nguyễn Gia Uyên - Cung Nhân Mã - 5/12/2002 ❤️</span>
         </div>
 
         <div class="message-box">
-            <div class="message">
-                Tớ không biết cậu đang giận, đang buồn, hay đang muốn biến mất khỏi thế giới này một chút.
+            <div class="message">Tớ không biết cậu đang giận, đang buồn, hay đang muốn biến mất khỏi thế giới này một
+                chút.</div>
+            <div class="message">Nhưng tớ vẫn nhắn, vì im lặng của cậu đang làm lòng tớ ồn ào lắm.</div>
+            <div class="message">Nếu cậu cần không gian, tớ không ép. Nhưng nếu cậu đang buông thì ít nhất cho tớ biết,
+                để tớ đừng chờ hoài trong một đoạn tin nhắn đã xem mà không trả lời.</div>
+            <div class="message">Tớ không trách gì cậu cả. Chỉ là nhớ cậu nhiều.</div>
+            <div class="message">Tớ vẫn đọc lại đoạn tin nhắn cũ. Vẫn mở bài hát cậu từng gửi...</div>
+            <div class="message">Tớ vẫn chờ. Nhưng nếu không phải tớ, thì cũng đừng để ai yêu thương cậu hời hợt nha bé.
             </div>
-            <div class="message">
-                Nhưng tớ vẫn nhắn, vì im lặng của cậu đang làm lòng tớ ồn ào lắm.
-            </div>
-            <div class="message">
-                Nếu cậu cần không gian, tớ không ép. Nhưng nếu cậu đang buông thì ít nhất cho tớ biết, để tớ đừng chờ
-                hoài trong một đoạn tin nhắn đã xem mà không trả lời.
-            </div>
-            <div class="message">
-                Tớ không trách gì cậu cả. Chỉ là nhớ cậu nhiều.
-            </div>
-            <div class="message">
-                Tớ vẫn đọc lại đoạn tin nhắn cũ. Vẫn mở bài hát cậu từng gửi...
-            </div>
-            <div class="message">
-                Tớ vẫn chờ. Nhưng nếu không phải tớ, thì cũng đừng để ai yêu thương cậu hời hợt nha bé.
-            </div>
-            <div class="message">
-                Tớ ích kỉ lắm, tớ sợ ai đó cướp mất cậu đi.
-            </div>
+            <div class="message">Tớ ích kỉ lắm, tớ sợ ai đó cướp mất cậu đi.</div>
         </div>
     </div>
+
+    <!-- Nhạc nền -->
+    <audio id="bgm" loop>
+        <source src="audio/snaptik.vn_4bab8.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
+
+    <!-- JavaScript -->
+    <script>
+        // Hiệu ứng gõ chữ
+        const text = "Cậu đã sẵn sàng chưa?";
+        const typingEl = document.getElementById("typing");
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typingEl.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 70);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", type);
+
+        // Bắt đầu trải nghiệm
+        function startExperience() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('chat').style.display = 'block';
+
+            const audio = document.getElementById("bgm");
+            audio.volume = 0.02; // Nhạc rất nhỏ
+            audio.play().catch(() => {
+                alert("Trình duyệt đang chặn autoplay. Hãy bật âm thanh thủ công.");
+            });
+        }
+    </script>
 </body>
 
 </html>
