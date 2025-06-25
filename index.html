@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nguyễn Gia Uyên</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #111;
+            color: white;
+        }
+
+        .intro-screen {
+    position: fixed;
+    inset: 0; /* thay cho top, left, right, bottom = 0 */
+    background: linear-gradient(135deg, #1c1c1c, #333);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    animation: fadeIn 2s ease-in-out;
+    padding: 20px; /* để tránh bị dính sát mép khi trên mobile */
+}
+
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .typing-text {
+            font-size: 2em;
+            margin-bottom: 1em;
+            white-space: nowrap;
+            border-right: 3px solid #4CAF50;
+            overflow: hidden;
+            width: 0;
+            animation: typing 2s steps(23, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 45ch;
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: #4CAF50;
+            }
+        }
+
+        .intro-screen button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .intro-screen button:hover {
+            background-color: #45a049;
+        }
+
+        .chat-container {
+            display: none;
+            padding: 20px;
+        }
+
+        .message-box {
+            margin-top: 20px;
+        }
+
+        .typing-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.typing-text {
+    font-size: 2em;
+    margin-bottom: 1em;
+    white-space: nowrap;
+    border-right: 3px solid #4CAF50;
+    overflow: hidden;
+    width: 0;
+    animation: typing 2s steps(23, end) forwards, blink-caret 0.75s step-end infinite;
+    text-align: center;
+    max-width: 100%;
+}
+
+
+        .header {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .back {
+            margin-right: 10px;
+        }
+
+        .note {
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #ccc;
+            font-style: italic;
+            text-align: center;
+            animation: fadeInNote 1.5s ease-in-out;
+        }
+
+        @keyframes fadeInNote {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Thông báo xoay ngang */
+        .rotate-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #111;
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            padding: 40% 20px;
+            z-index: 10000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Cảnh báo xoay ngang -->
+    <div class="rotate-warning" id="rotateWarning">
+        📱 Vui lòng xoay ngang điện thoại để tiếp tục 🌙
+    </div>
+
+    <!-- Màn hình mở đầu -->
+    <div class="intro-screen" id="intro">
+        <div class="typing-wrapper">
+            <div id="typing" class="typing-text"></div>
+            <button onclick="startExperience()">Đồng ý</button>
+            <p class="note">⚠️ Nhấn "Đồng ý" để bước vào thế giới tớ dành riêng cho cậu</p>
+            <p class="note">🎵 Có nhạc nền nhẹ nhàng, nên nhớ bật âm lượng nhỏ thôi nha</p>
+            <p class="note">👀 Đừng lo, cái này chỉ để cậu xem – không hiện “Đã xem” đâu...</p>
+        
+        </div>
+    </div>
+    
+    </div>
+    <!-- Nội dung chính -->
+    <div class="chat-container" id="chat">
+        <div class="header">
+            <span class="back">&#x25C0;</span>
+            <span class="name">Gửi cậu, Nguyễn Gia Uyên - Cung Nhân Mã - 5/12/2002 ❤️</span>
+        </div>
+        <div class="message-box">
+            <div class="timestamp">📅 Ngày 25/6/2025 — 🕰️ 23:32</div>
+            <div class="message">
+                Cậu ngủ ngon
+            </div>
+            <div class="timestamp">📅 Ngày 25/6/2025 — 🕰️ 23:25</div>
+            <div class="message">
+                Tới giờ vẫn chưa fix xong cái ảnh, thật bất tài,...
+            </div>
+        
+            <div class="message">
+                Tớ nhớ cậu nhiều, tớ fix xong rồi
+            </div>
+            <div class="timestamp">📅 Ngày 25/6/2025 — 🕰️ 15:04</div>
+            <div class="message">
+                Trưa nay có mail. Khoe cậu tí
+            </div>
+        <!-- ...existing code... -->
+        <div class="message-image">
+            <img src="audio/z6740788576139_3637ce5b411354ddb312ca3cd61a54b7.png" alt="Mô tả ảnh" class="thumbnail" onclick="openImage(this)">
+        </div>
+        
+        
+        <!-- ...existing code... -->
+            
+            <div class="timestamp">📅 Ngày 25/6/2025 — 🕰️ 11:04</div>
+            <div class="message">Tới giờ trưa rồi, cậu nhớ ăn uống đầy đủ không được bỏ bữa để không bị đau dạ dày,...</div>
+            <div class="message">Tớ hiểu rằng, khi một cánh cửa không còn muốn mở, thì dù có gõ bao nhiêu cũng chỉ khiến người bên
+                trong thêm phiền lòng...</div>
+            <div class="message">Vậy nên tớ sẽ không gõ nữa, chỉ lặng lẽ đứng đó — chờ đến khi nào cậu sẵn sàng mở cửa, tớ vẫn ở đây
+                thôi.</div>
+
+
+            <div class="timestamp">📅 Ngày 24/6/2025 — 🕰️ 22:51</div>
+            <div class="message">Chắc cậu cũng đã ngủ rồi nhỉ...</div>
+            <div class="message">Lúc nào cũng nghĩ về cậu hết, tớ nghĩ rằng có thể nắm tay cậu, có thể che chở cậu, có thể đươc yêu thương cậu,...
+
+            </div>
+            <div class="message"> Nhưng rồi tớ lại nghĩ rằng không làm phiền là cách tốt nhất để yêu thương cậu, để cậu được hạnh phúc, để cậu cười
+            </div>
+            <div class="message"> Tớ đã trở thành rồi ngoài lề rồi, haha,... cuộc đời thật nghiệt ngã
+            </div>
+            <div class="message"> Chúc cậu ngủ ngon ♥️
+            </div>
+
+
+            <div class="timestamp">📅 Ngày 24/6/2025 — 🕰️ 10:30</div>
+            <div class="message">Trong đầu tớ lúc nào cũng là hình bóng cậu. Tớ nhớ khoảnh khắc cậu rơi nước mắt vì công việc, tớ đã
+                hứa sẽ bảo vệ cậu, là điểm tựa cho cậu… vậy mà tớ lại không làm được.</div>
+            <div class="message">Tớ thấy mình thật tệ… Tớ hiểu rằng, nếu thật lòng muốn cậu hạnh phúc, có lẽ tớ nên rời xa, để không
+                làm xáo trộn cuộc sống của cậu nữa.</div>
+            <div class="message">Nụ cười ấy, ánh mắt ấy, dáng vẻ ấy… tớ sẽ chẳng bao giờ quên được ☺️</div>
+            <div class="message">Ước gì một ngày nào đó, tớ có thể bước vào cuộc đời cậu, nắm tay cậu, cùng cậu rong ruổi trên những
+                con đường, được cười đùa, được nghe cậu kể chuyện – như những điều giản dị mà tớ luôn ao ước ☺️</div>
+                <div class="message">Trong những khoảng lặng ấy, tớ lại suy nghĩ nếu tớ làm được thì đứa con trai khác cũng làm được, có thể tốt hơn tớ gấp nhiều lần,...</div>
+                <div class="message">Tớ thì thua xa họ, chúc cậu cười nhiều hơn, hạnh phúc trong cuộc sống.. người con gái đã chịu quá nhiều từ khi còn là một cô bé..☺️</div>
+            <div class="message">Cậu nhớ đừng bỏ bữa sáng để rồi tụt đường như mọi hôm, nhớ đừng bỏ bữa trưa để rồi đau dạ dày, còn về công việc áp lực cậu cố gắng vượt qua nhé</div>
+            <div class="message">Một cô gái mạnh mẽ bên ngoài, nhưng tớ cảm thấy trong lòng cậu luôn chan chứa nổi buồn, khi nào cậu cảm thấy mệt thì nhắn hay gọi cho tớ, tớ vẫn luôn chờ cậu.</div>
+            <div class="message">Cậu đối xử với tớ thế nào đi nữa thì cũng không bằng cậu đã chịu nhiều thiệt thòi, nhiều bất hạnh,...</div>
+            <div class="message">tớ không phải thương hại cậu, mà là TỚ YÊU CẬU rất nhiều ☺️☺️</div>
+
+            <div class="timestamp">📅 Ngày 23/6/2025 — 🕰️ 07:04</div>
+            <div class="message">Cậu cứ im lặng, còn tớ thì suy nghĩ kệ tớ, tớ tôn trọng quyết định của cậu.</div>
+            <div class="message">Một người thì im lặng, một người nghĩ nhiều, biết khi nào mới chấm dứt</div>
+            <div class="message">Thôi thì im lặng cũng là một câu trả lời, tớ thua rồi, tớ chúc cậu hạnh phúc ☺️☺️</div>
+            <div class="message">Cậu xứng đáng có được hạnh phúc, tạm biệt cậu, tớ không phiền cuộc sống của cậu nữa ☺️☺️</div>
+            <div class="message">Khi nào cậu cần tớ thì quay lại nói 1 tiếng thôii</div>
+            <div class="message">Tại sao lại là tớ, tại sao chỉ tớ là cậu im lặng</div>
+            <div class="message">Cuộc đời nó nghiệt ngã haha</div>
+
+            <div class="timestamp">📅 Ngày 22/6/2025 — 🕰️ 11:36</div>
+        
+            <div class="message">Có phải do tớ cố chấp, không chịu chấp nhận sự thật.</div>
+            <div class="message">Hay do tớ quá yêu thương cậu, nên không thể buông tay được.</div>
+            <div class="message">Tớ không trách cậu đối xử với tớ như thế...</div>
+            <div class="message">Tớ chỉ trách bản thân đã quá vô tâm, không tốt với cậu...</div>
+            <div class="message">Tớ chỉ mong cậu tìm được một người — một người hoàn hảo, biết yêu thương cậu, biết làm cậu vui,
+                không làm cậu tổn thương như tớ đã từng...</div>
+            <div class="message">Tớ chỉ mong cậu hạnh phúc. Nhìn cậu cười là tớ thấy hạnh phúc rồi...</div>
+            <div class="message">Cuộc sống này đã quá bất công với cậu rồi. Mong cậu sẽ hạnh phúc ☺️☺️</div>
+            <div class="message">Một người vô dụng, bất tài như tớ thì không đem lại hạnh phúc cho ai cả, chỉ làm khổ người khác
+                mà thôi ☺️☺️</div>
+            <div class="message">Tớ lại trở về những ngày trong góc tối của mình đây,... haha</div>
+            <div class="message">Đưa ra quyết định yêu ai đó là quá khó khăn với tớ. Tớ luôn tự hỏi: “Có đem lại được hạnh phúc
+                cho người ta không? Có lo cho họ một cuộc đời, che chở, bảo vệ được họ không? Có xứng với họ không?” ☺️☺️ haha
+            </div>
+        
+            <div class="timestamp">📅 Ngày 20/6/2025 — 🕰️ 10:36</div>
+        
+            <div class="message">Tớ không biết cậu đang giận, đang buồn, hay đang muốn biến mất khỏi thế giới này một chút.
+            </div>
+            <div class="message">Nhưng tớ vẫn nhắn, vì im lặng của cậu đang làm lòng tớ ồn ào lắm.</div>
+            <div class="message">Nếu cậu cần không gian, tớ không ép. Nhưng nếu cậu đang buông thì ít nhất cho tớ biết, để tớ
+                đừng chờ hoài trong một đoạn tin nhắn đã xem mà không trả lời.</div>
+            <div class="message">Tớ không trách gì cậu cả. Chỉ là nhớ cậu nhiều.</div>
+            <div class="message">Tớ vẫn đọc lại đoạn tin nhắn cũ. Vẫn mở bài hát cậu từng gửi...</div>
+            <div class="message">Tớ vẫn chờ. Nhưng nếu không phải tớ, thì cũng đừng để ai yêu thương cậu hời hợt nha bé.</div>
+            <div class="message">Tớ ích kỉ lắm, tớ sợ ai đó cướp mất cậu đi.</div>
+        
+        </div>
+        
+    </div>
+
+    <!-- Nhạc nền -->
+    <audio id="bgm" loop>
+        <source src="audio/snaptik.vn_e5566.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
+    <!-- Overlay popup ảnh, đặt ngoài cùng -->
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close-btn" onclick="closeImage()">×</span>
+            <img id="fullImage" class="full-img" />
+            <div id="caption" class="caption"></div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Hiệu ứng gõ chữ
+        // Hiệu ứng gõ chữ với hỗ trợ xuống dòng
+            const text = "Những lời tâm sự, nổi niềm của tớ<br>cậu có muốn nghe...";
+            const typingEl = document.getElementById("typing");
+
+            let i = 0;
+            let isTag = false;
+            let tempTag = "";
+
+            function type() {
+                if (i < text.length) {
+                    const char = text[i];
+
+                    if (char === "<") {
+                        isTag = true;
+                        tempTag += char;
+                    } else if (char === ">" && isTag) {
+                        tempTag += char;
+                        typingEl.innerHTML += tempTag;
+                        tempTag = "";
+                        isTag = false;
+                    } else if (isTag) {
+                        tempTag += char;
+                    } else {
+                        typingEl.innerHTML += char;
+                    }
+
+                    i++;
+                    setTimeout(type, 70);
+                }
+            }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            type();
+            checkOrientation();
+        });
+
+        // Bắt đầu trải nghiệm
+        function startExperience() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('chat').style.display = 'block';
+
+            const audio = document.getElementById("bgm");
+            audio.volume = 0.1;
+            audio.play().catch(() => {
+                alert("Trình duyệt đang chặn autoplay. Hãy bật âm thanh thủ công.");
+            });
+        }
+
+        // Kiểm tra hướng màn hình
+        function checkOrientation() {
+            const isPortrait = window.innerHeight > window.innerWidth;
+            const warning = document.getElementById('rotateWarning');
+            const intro = document.getElementById('intro');
+            const chat = document.getElementById('chat');
+
+            if (isPortrait) {
+                warning.style.display = 'block';
+                intro.style.display = 'none';
+                chat.style.display = 'none';
+            } else {
+                warning.style.display = 'none';
+                if (chat.style.display === 'block') {
+                    chat.style.display = 'block';
+                } else {
+                    intro.style.display = 'block';
+                }
+            }
+        }
+
+        window.addEventListener("resize", checkOrientation);
+        window.addEventListener("orientationchange", checkOrientation);
+
+        function openImage(imgEl) {
+                const overlay = document.getElementById("overlay");
+                const fullImg = document.getElementById("fullImage");
+                const caption = document.getElementById("caption");
+
+                fullImg.src = imgEl.src;
+                caption.textContent = imgEl.alt || "";
+                overlay.classList.add("show");
+            }
+
+            function closeImage() {
+                document.getElementById("overlay").classList.remove("show");
+            }
+
+            // Đóng popup khi bấm ra ngoài ảnh
+            document.getElementById("overlay").addEventListener("click", function (e) {
+                if (e.target === this) {
+                    closeImage();
+                }
+            });
+
+    </script>
+</body>
+
+</html>
